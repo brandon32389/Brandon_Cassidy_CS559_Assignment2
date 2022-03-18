@@ -13,6 +13,16 @@ namespace Brandon_Cassidy_CS559_Assignment2
         private string lastName;
         private DateTime birthDate;
 
+        public Person()
+        {
+
+        }
+        public Person(string fn, string ln, DateTime bd)
+        {
+            firstName = fn;
+            lastName = ln;
+            birthDate = bd;
+        }
         // Public properties
         public string FirstName
         {
