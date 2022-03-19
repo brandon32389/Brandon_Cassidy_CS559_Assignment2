@@ -6,31 +6,45 @@ namespace Brandon_Cassidy_CS559_Assignment2
     class YourQueue : Queue
     {
         // Setting up the person dequeued event.
-        public delegate void PersonDequeuedHandler(string Message);
+        public delegate void PersonDequeuedHandler(Person p);
         public event PersonDequeuedHandler PersonDequeued;
 
         // Setting up the non-person dequeued event.
-        public delegate void NonPersonDequeuedHandler(string Message);
+        public delegate void NonPersonDequeuedHandler(Object o);
         public event NonPersonDequeuedHandler NonPersonDequeued;
 
         public override object Dequeue()
         {
-            string message = "";
-            if (this.GetType().ToString() == "Person")
+            string type = this.Peek().GetType().Name;
+            if (this.Peek().GetType().Name == "Person")
             {
-                //message = $"You successfully dequeued {this.firstName}. Their birthday is in x days!";
-                RaisePersonDequeuedEvent(message);
+                Person p = new Person();
+                p = (Person)this.Peek();
+                RaisePersonDequeuedEvent(p);
             }
             else
             {
-                RaisePersonDequeuedEvent(message);
+                Object o = new Object();
+                o = this.Peek();
+                RaiseNonPersonDequeuedEvent(o);
             }
             return base.Dequeue();
         }
 
-        private void RaisePersonDequeuedEvent(string message)
+        private void RaisePersonDequeuedEvent(Person p)
         {
-            PersonDequeued(message);
+            if(PersonDequeued != null)
+            {
+                PersonDequeued(p);
+            }
+            
+        }
+        private void RaiseNonPersonDequeuedEvent(Object o)
+        {
+            if (NonPersonDequeued != null)
+            {
+                NonPersonDequeued(o);
+            }
         }
     }
 }
